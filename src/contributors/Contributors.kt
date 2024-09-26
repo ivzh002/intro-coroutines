@@ -125,7 +125,7 @@ interface Contributors: CoroutineScope {
         completed: Boolean = true
     ) {
         updateContributors(users)
-        updateLoadingStatus(if (completed) COMPLETED else IN_PROGRESS, startTime)
+        updateLoadingStatus(if (completed) COMPLETED else IN_PROGRESS, startTime, users.size)
         if (completed) {
             setActionsStatus(newLoadingEnabled = true)
         }
@@ -133,7 +133,8 @@ interface Contributors: CoroutineScope {
 
     private fun updateLoadingStatus(
         status: LoadingStatus,
-        startTime: Long? = null
+        startTime: Long? = null,
+        usersCount: Int = 0
     ) {
         val time = if (startTime != null) {
             val time = System.currentTimeMillis() - startTime
@@ -142,7 +143,7 @@ interface Contributors: CoroutineScope {
 
         val text = "Loading status: " +
                 when (status) {
-                    COMPLETED -> "completed in $time"
+                    COMPLETED -> "completed in $time. $usersCount unique users"
                     IN_PROGRESS -> "in progress $time"
                     CANCELED -> "canceled"
                 }
