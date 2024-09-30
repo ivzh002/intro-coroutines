@@ -21,5 +21,4 @@ fun List<User>.aggregate(): List<User> =
         } else {
             accumulator!! + element.contributions
         }
-    }.toList().map { User(it.first, it.second)}
-//    this
+    }.toList().map { User(it.first, it.second)}.sortedByDescending { it.contributions }
